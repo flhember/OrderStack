@@ -12,7 +12,7 @@ export default function MenuStack() {
           title: 'Menu',
           headerTitleAlign: 'center',
           headerRight: () => (
-            <Link href="/" asChild>
+            <Link href="/(admin)/menu/create" asChild>
               <Pressable
                 style={{
                   width: 50,
@@ -24,33 +24,6 @@ export default function MenuStack() {
                 {({ pressed }) => (
                   <FontAwesome
                     name="plus-square-o"
-                    size={25}
-                    color={Colors.light.tint}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-
-      <Stack.Screen
-        name="[id]"
-        options={{
-          headerRight: () => (
-            <Link href="/" asChild>
-              <Pressable
-                style={{
-                  width: 50,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="pencil"
                     size={25}
                     color={Colors.light.tint}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
