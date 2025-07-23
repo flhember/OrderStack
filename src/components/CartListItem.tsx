@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 75,
+    width: "20%",
     aspectRatio: 1,
     alignSelf: 'center',
     marginRight: 10,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   title: {
     fontWeight: '500',

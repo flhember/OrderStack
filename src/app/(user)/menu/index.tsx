@@ -3,7 +3,7 @@ import ProductListItem from '@/src/components/ProductListItem';
 import { FlatList } from 'react-native';
 
 export default function HomeScreen() {
-  return (
+  return (      
     <FlatList
       data={products}
       renderItem={({ item }) => <ProductListItem product={item} />}
