@@ -14,13 +14,20 @@ export default function MenuStack() {
 
         headerRight: () => (
           <Link href="/cart" asChild>
-            <Pressable style={{  width:50}}>
+            <Pressable
+              style={{
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               {({ pressed }) => (
                 <FontAwesome
                   name="shopping-cart"
                   size={25}
                   color={Colors.light.tint}
-                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1  }}
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                 />
               )}
             </Pressable>
@@ -28,7 +35,10 @@ export default function MenuStack() {
         ),
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'Menu', headerTitleAlign: 'center' }} />
+      <Stack.Screen
+        name="index"
+        options={{ title: 'Menu', headerTitleAlign: 'center' }}
+      />
     </Stack>
   );
 }

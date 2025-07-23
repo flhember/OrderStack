@@ -28,8 +28,13 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <CartProvider>
           <Stack>
+            <Stack.Screen name="index" options={{ headerShown: true }} />
+            <Stack.Screen name="(admin)" options={{ headerShown: false }} />
             <Stack.Screen name="(user)" options={{ headerShown: false }} />
-            <Stack.Screen name="cart" options={{ presentation: 'modal', headerTitleAlign: 'center', title: 'Cart' }} />
+            <Stack.Screen
+              name="cart"
+              options={{ presentation: 'modal', title: 'Cart' }}
+            />
           </Stack>
           <StatusBar style="auto" />
         </CartProvider>
