@@ -27,7 +27,6 @@ export default function TabLayout() {
           backgroundColor: Colors.light.tint,
         },
       }}
-
     >
       <Tabs.Screen
         name="index"
@@ -46,9 +45,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="orders"
         options={{
           title: 'Orders',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
