@@ -35,6 +35,7 @@ export default function RootLayout() {
               name="cart"
               options={{ presentation: 'modal', title: 'Cart' }}
             />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           </Stack>
           <StatusBar style="auto" />
         </CartProvider>
