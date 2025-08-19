@@ -1,23 +1,39 @@
 import Button from '@/src/components/Button';
 import { Colors } from '@/src/constants/Colors';
+import { supabase } from '@/src/lib/supabase';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const SignInScreen = () => {
-  const [mail, setMail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const resetValues = () => {
-    setMail('');
+  async function signInWithEmail() {
+    console.log('Signing up with email:', email);
+    setLoading(true);
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) Alert.alert(error.message);
+    setLoading(false);
+  }
+
+  /* const resetValues = () => {
+    setEmail('');
     setPassword('');
     setErrors('');
   };
 
   const validateInput = () => {
     setErrors('');
-    if (!mail) {
+    if (!email) {
       setErrors('Email is required');
       return false;
     }
@@ -35,15 +51,15 @@ const SignInScreen = () => {
 
     resetValues();
 
-    console.log('Signing in with:', { mail, password });
-  };
+    console.log('Signing in with:', { email, password });
+  };*/
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Email</Text>
       <TextInput
-        value={mail}
-        onChangeText={setMail}
+        value={email}
+        onChangeText={setEmail}
         placeholder="Email"
         style={styles.input}
       />
@@ -59,7 +75,11 @@ const SignInScreen = () => {
 
       <Text style={{ color: 'red' }}>{errors}</Text>
 
-      <Button text="Sign In" onPress={onSignIn} />
+      <Button
+        text={loading ? 'Signing in...' : 'Sign In'}
+        onPress={signInWithEmail}
+        disabled={loading}
+      />
 
       <Link href={'/sign-up'} style={styles.textButton}>
         Create an account

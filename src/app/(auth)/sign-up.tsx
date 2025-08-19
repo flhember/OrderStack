@@ -1,22 +1,38 @@
 import Button from '@/src/components/Button';
 import { Colors } from '@/src/constants/Colors';
+import { supabase } from '@/src/lib/supabase';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const SignUpScreen = () => {
-  const [mail, setMail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const resetValues = () => {
-    setMail('');
+  async function signUpWithEmail() {
+    console.log('Signing up with email:', email);
+    setLoading(true);
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+    if (error) Alert.alert(error.message);
+    setLoading(false);
+  }
+
+  /*const resetValues = () => {
+    setEmail('');
     setPassword('');
     setErrors('');
   };
 
   const validateInput = () => {
     setErrors('');
-    if (!mail) {
+    if (!email) {
       setErrors('Email is required');
       return false;
     }
@@ -34,15 +50,15 @@ const SignUpScreen = () => {
 
     resetValues();
 
-    console.log('Signing up with:', { mail, password });
-  };
+    console.log('Signing up with:', { email, password });
+  };*/
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Email</Text>
       <TextInput
-        value={mail}
-        onChangeText={setMail}
+        value={email}
+        onChangeText={setEmail}
         placeholder="Email"
         style={styles.input}
       />
@@ -58,7 +74,11 @@ const SignUpScreen = () => {
 
       <Text style={{ color: 'red' }}>{errors}</Text>
 
-      <Button text="Sign Up" onPress={onSignUp} />
+      <Button
+        text={loading ? 'Creating an accound...' : 'Create an account'}
+        onPress={signUpWithEmail}
+        disabled={loading}
+      />
     </View>
   );
 };
