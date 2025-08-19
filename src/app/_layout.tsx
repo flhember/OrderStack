@@ -9,8 +9,10 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
-import CartProvider from '@/src/providers/CartProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import AuthProvider from '@/src/providers/AuthProvider';
+import CartProvider from '@/src/providers/CartProvider';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -26,19 +28,21 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <CartProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: true }} />
-            <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-            <Stack.Screen name="(user)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="cart"
-              options={{ presentation: 'modal', title: 'Cart' }}
-            />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: true }} />
+              <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+              <Stack.Screen name="(user)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="cart"
+                options={{ presentation: 'modal', title: 'Cart' }}
+              />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            </Stack>
+            <StatusBar style="auto" />
+          </CartProvider>
+        </AuthProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
