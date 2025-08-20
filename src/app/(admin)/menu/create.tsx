@@ -1,5 +1,6 @@
 import { defaultImage } from '@/assets/data/products';
 import {
+  useDeleteProduct,
   useInsertProduct,
   useProduct,
   useUpdateProduct,
@@ -15,7 +16,7 @@ const CreateProductScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [errors, setErrors] = useState('');
-  const [image, setImage] = useState(defaultImage);
+  const [image, setImage] = useState<string | null>(defaultImage);
 
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(
@@ -27,6 +28,7 @@ const CreateProductScreen = () => {
   const { mutate: insertProduct } = useInsertProduct();
   const { mutate: updateProduct } = useUpdateProduct();
   const { data: updatingProduct } = useProduct(id);
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   const router = useRouter();
 
@@ -125,7 +127,12 @@ const CreateProductScreen = () => {
   };
 
   const onDelete = () => {
-    console.warn(`Deleted product with id ${id}`);
+    deleteProduct(id, {
+      onSuccess: () => {
+        resetValues();
+        router.replace('/(admin)');
+      },
+    });
   };
 
   const confirmDelete = () => {
@@ -148,7 +155,7 @@ const CreateProductScreen = () => {
           title: isUpdating ? 'Update Product' : 'Create Product',
         }}
       />
-      <Image source={{ uri: image }} style={styles.image} />
+      <Image source={{ uri: image || defaultImage }} style={styles.image} />
       <Text onPress={pickImage} style={styles.textButton}>
         Select Image
       </Text>

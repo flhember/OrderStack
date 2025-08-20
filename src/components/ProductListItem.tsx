@@ -1,10 +1,10 @@
-import type { Product } from '@/src/types';
 import { Link, useSegments } from 'expo-router';
 import { Image, Pressable, StyleSheet, Text } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { Tables } from '../database.types';
 
 type ProductListItemProps = {
-  product: Product;
+  product: Tables<'products'>;
 };
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
@@ -17,7 +17,10 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
   return (
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
-        <Image style={styles.image} source={{ uri: product.image_url }} />
+        <Image
+          style={styles.image}
+          source={{ uri: product.image || undefined }}
+        />
         <Text style={styles.title}>{product.name}</Text>
         <Text style={styles.price}>{product.price}$</Text>
       </Pressable>
