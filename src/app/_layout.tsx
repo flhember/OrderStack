@@ -13,6 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import AuthProvider from '@/src/providers/AuthProvider';
 import CartProvider from '@/src/providers/CartProvider';
+import QueryProvider from '../providers/QueryProvider';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -29,19 +30,21 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <AuthProvider>
-          <CartProvider>
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: true }} />
-              <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-              <Stack.Screen name="(user)" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="cart"
-                options={{ presentation: 'modal', title: 'Cart' }}
-              />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            </Stack>
-            <StatusBar style="auto" />
-          </CartProvider>
+          <QueryProvider>
+            <CartProvider>
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: true }} />
+                <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+                <Stack.Screen name="(user)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="cart"
+                  options={{ presentation: 'modal', title: 'Cart' }}
+                />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              </Stack>
+              <StatusBar style="auto" />
+            </CartProvider>
+          </QueryProvider>
         </AuthProvider>
       </ThemeProvider>
     </SafeAreaProvider>
