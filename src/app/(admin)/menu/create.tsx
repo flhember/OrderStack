@@ -1,9 +1,14 @@
 import { defaultImage } from '@/assets/data/products';
+import {
+  useInsertProduct,
+  useProduct,
+  useUpdateProduct,
+} from '@/src/api/products';
 import Button from '@/src/components/Button';
 import { Colors } from '@/src/constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
-import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const CreateProductScreen = () => {
@@ -12,8 +17,26 @@ const CreateProductScreen = () => {
   const [errors, setErrors] = useState('');
   const [image, setImage] = useState(defaultImage);
 
-  const { id } = useLocalSearchParams();
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(
+    typeof idString === 'string' ? idString : idString?.[0]
+  );
+
   const isUpdating = Boolean(id);
+
+  const { mutate: insertProduct } = useInsertProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
+  const { data: updatingProduct } = useProduct(id);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (updatingProduct) {
+      setName(updatingProduct.name);
+      setPrice(updatingProduct.price.toString());
+      setImage(updatingProduct.image);
+    }
+  }, [updatingProduct]);
 
   const resetValues = () => {
     setName('');
@@ -57,7 +80,19 @@ const CreateProductScreen = () => {
       return;
     }
 
-    resetValues();
+    insertProduct(
+      {
+        name,
+        image,
+        price: parseFloat(price),
+      },
+      {
+        onSuccess: () => {
+          resetValues();
+          router.back();
+        },
+      }
+    );
   };
 
   const onUpdateCreate = () => {
@@ -65,7 +100,20 @@ const CreateProductScreen = () => {
       return;
     }
 
-    resetValues();
+    updateProduct(
+      {
+        id,
+        name,
+        image,
+        price: parseFloat(price),
+      },
+      {
+        onSuccess: () => {
+          resetValues();
+          router.back();
+        },
+      }
+    );
   };
 
   const onSubmit = () => {
