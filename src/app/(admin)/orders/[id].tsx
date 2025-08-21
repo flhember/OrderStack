@@ -1,4 +1,4 @@
-import { useOrderDetails } from '@/src/api/orders';
+import { useOrderDetails, useUpdateOrder } from '@/src/api/orders';
 import OrderItemListItem from '@/src/components/OrderItemListItem';
 import OrderListItem from '@/src/components/OrderListItem';
 import { Colors } from '@/src/constants/Colors';
@@ -19,6 +19,11 @@ export default function OrderDetailScreen() {
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
   const { data: order, isLoading, error } = useOrderDetails(id);
+  const { mutate: updateOrder } = useUpdateOrder();
+
+  const updateStatus = async (status: string) => {
+    updateOrder({ id, updateFields: { status } });
+  };
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -27,10 +32,6 @@ export default function OrderDetailScreen() {
   if (error || !order) {
     return <Text>{error?.message ? error.message : 'error'}</Text>;
   }
-
-  const updateStatus = async (status: string) => {
-    console.warn(`Updating order ${id} status to ${status}`);
-  };
 
   return (
     <View style={styles.container}>

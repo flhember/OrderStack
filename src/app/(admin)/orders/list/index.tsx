@@ -1,4 +1,5 @@
 import { useAdminOrderList } from '@/src/api/orders';
+import { useInsertOrderSubscription } from '@/src/api/orders/subscriptions';
 import OrderListItem from '@/src/components/OrderListItem';
 import React from 'react';
 import {
@@ -15,6 +16,8 @@ export default function OrdersScreen() {
     isLoading,
     error,
   } = useAdminOrderList({ archived: false });
+
+  useInsertOrderSubscription();
 
   if (isLoading) {
     return <ActivityIndicator />;
