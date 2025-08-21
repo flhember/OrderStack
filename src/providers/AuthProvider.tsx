@@ -15,6 +15,16 @@ type AuthData = {
   isAdmin: boolean;
 };
 
+type Profile = {
+  avatar_url: string | null;
+  full_name: string | null;
+  group: string;
+  id: string;
+  updated_at: string | null;
+  username: string | null;
+  website: string | null;
+} | null;
+
 const AuthContext = createContext<AuthData>({
   session: null,
   loading: true,
@@ -24,7 +34,7 @@ const AuthContext = createContext<AuthData>({
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<Profile>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -43,14 +53,14 @@ export default function AuthProvider({ children }: PropsWithChildren) {
           .single();
         setProfile(data || null);
 
-        console.log(data);
+        console.log(data?.group);
       }
 
       setLoading(false);
     };
     fetchSession();
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session);
+      console.log('Auth state changed:', event, session?.user.email);
       setSession(session);
     });
   }, []);

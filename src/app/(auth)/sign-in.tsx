@@ -12,7 +12,7 @@ const SignInScreen = () => {
   const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
-    console.log('Signing up with email:', email);
+    console.log('Signing in with email:', email);
     setLoading(true);
     const {
       data: { session },

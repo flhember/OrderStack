@@ -9,9 +9,6 @@ import { useAuth } from '../providers/AuthProvider';
 const index = () => {
   const { session, loading, isAdmin } = useAuth();
 
-  console.log('Session:', session);
-  console.log('loading:', loading);
-
   if (loading) {
     return <ActivityIndicator />;
   }
