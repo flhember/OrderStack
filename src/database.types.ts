@@ -62,21 +62,21 @@ export type Database = {
           id: number
           status: string
           total: number
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: number
           status?: string
           total?: number
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: number
           status?: string
           total?: number
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {

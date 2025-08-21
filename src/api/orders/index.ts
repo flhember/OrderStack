@@ -1,6 +1,7 @@
+import { TablesInsert } from '@/src/database.types';
 import { supabase } from '@/src/lib/supabase';
 import { useAuth } from '@/src/providers/AuthProvider';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useAdminOrderList = ({ archived = false }) => {
   const statues = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering'];
@@ -55,6 +56,32 @@ export const useOrderDetails = (id: number) => {
         throw new Error(error.message);
       }
       return data;
+    },
+  });
+};
+
+export const useInsertOrder = () => {
+  const queryClient = useQueryClient();
+  const { session } = useAuth();
+  const userId = session?.user.id;
+
+  return useMutation({
+    async mutationFn(data: TablesInsert<'orders'>) {
+      const { error, data: newProduct } = await supabase
+        .from('orders')
+        .insert({ ...data, user_id: userId })
+        .select()
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return newProduct;
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({
+        queryKey: ['products'],
+      });
     },
   });
 };
