@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: '#fff',
     borderRadius: 20,
+    maxWidth: '50%',
   },
   image: {
     width: '80%',
