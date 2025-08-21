@@ -49,8 +49,10 @@ const ProductDetailsScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: product.name }} />
-      <Image style={styles.image} source={{ uri: product.image_url }} />
-
+      <Image
+        style={styles.image}
+        source={{ uri: product.image || undefined }}
+      />
       <Text style={styles.selectSizeText}>Select size</Text>
       <View style={styles.sizes}>
         {sizes.map((size) => (

@@ -15,7 +15,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: cartItem.product.image_url }}
+        source={{ uri: cartItem.product.image || undefined }}
         style={styles.image}
         resizeMode="contain"
       />
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: "20%",
+    width: '20%',
     aspectRatio: 1,
     alignSelf: 'center',
     marginRight: 10,

@@ -12,7 +12,7 @@ const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: item.products.image_url || defaultImage }}
+        source={{ uri: item.products.image || defaultImage }}
         style={styles.image}
         resizeMode="contain"
       />
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
     marginVertical: 10,
-    paddingHorizontal: 10,
   },
   quantity: {
     fontWeight: '500',
