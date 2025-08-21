@@ -21,8 +21,8 @@ export default function OrderDetailScreen() {
     return <ActivityIndicator />;
   }
 
-  if (error) {
-    return <Text>{error.message}</Text>;
+  if (error || !order) {
+    return <Text>{error?.message ? error.message : 'error'}</Text>;
   }
 
   return (
