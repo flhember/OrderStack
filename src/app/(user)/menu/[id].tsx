@@ -1,5 +1,7 @@
+import { defaultImage } from '@/assets/data/products';
 import { useProduct } from '@/src/api/products';
 import Button from '@/src/components/Button';
+import RemoteImage from '@/src/components/RemoteImage';
 import { Colors } from '@/src/constants/Colors';
 import { useCart } from '@/src/providers/CartProvider';
 import { PizzaSize } from '@/src/types';
@@ -7,7 +9,6 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   ActivityIndicator,
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -48,10 +49,11 @@ const ProductDetailsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: product.name }} />
-      <Image
+      <Stack.Screen options={{ title: product?.name }} />
+      <RemoteImage
         style={styles.image}
-        source={{ uri: product.image || undefined }}
+        path={product?.image}
+        fallback={defaultImage}
       />
       <Text style={styles.selectSizeText}>Select size</Text>
       <View style={styles.sizes}>
@@ -79,7 +81,7 @@ const ProductDetailsScreen = () => {
         ))}
       </View>
 
-      <Text style={styles.price}>{product.price}$</Text>
+      <Text style={styles.price}>{product?.price}$</Text>
       <Button text="Add to cart" onPress={addToCart} />
     </View>
   );

@@ -1,8 +1,9 @@
 import { defaultImage } from '@/assets/data/products';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { Tables } from '../database.types';
+import RemoteImage from './RemoteImage';
 
 type OrderItemListItemProps = {
   item: { products: Tables<'products'> } & Tables<'order_items'>;
@@ -11,12 +12,11 @@ type OrderItemListItemProps = {
 const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: item.products.image || defaultImage }}
+      <RemoteImage
         style={styles.image}
-        resizeMode="contain"
+        path={item.products.image}
+        fallback={defaultImage}
       />
-
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{item.products.name}</Text>
         <View style={styles.subtitleContainer}>

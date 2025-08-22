@@ -12,6 +12,11 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { supabase } from '@/src/lib/supabase';
+import { decode } from 'base64-arraybuffer';
+import { randomUUID } from 'expo-crypto';
+import * as FileSystem from 'expo-file-system';
+
 const CreateProductScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -77,15 +82,18 @@ const CreateProductScreen = () => {
     }
   };
 
-  const onCreate = () => {
+  const onCreate = async () => {
     if (!validateInput()) {
       return;
     }
 
+    // Add loading iondicator later !! And bloc upload button
+    const imagePath = await uploadImage();
+
     insertProduct(
       {
         name,
-        image,
+        image: imagePath,
         price: parseFloat(price),
       },
       {
@@ -148,6 +156,28 @@ const CreateProductScreen = () => {
     ]);
   };
 
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, decode(base64), { contentType });
+
+    console.log(error);
+
+    if (data) {
+      return data.path;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -156,6 +186,7 @@ const CreateProductScreen = () => {
         }}
       />
       <Image source={{ uri: image || defaultImage }} style={styles.image} />
+
       <Text onPress={pickImage} style={styles.textButton}>
         Select Image
       </Text>
