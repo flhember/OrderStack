@@ -105,16 +105,18 @@ const CreateProductScreen = () => {
     );
   };
 
-  const onUpdateCreate = () => {
+  const onUpdateCreate = async () => {
     if (!validateInput()) {
       return;
     }
+
+    const imagePath = await uploadImage();
 
     updateProduct(
       {
         id,
         name,
-        image,
+        image: imagePath,
         price: parseFloat(price),
       },
       {
