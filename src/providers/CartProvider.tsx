@@ -101,7 +101,7 @@ const CartProvider = ({ children }: PropsWithChildren) => {
       onSuccess: () => {
         clearCart();
         router.dismiss();
-        //router.push(`/(user)/orders/${data.id}`);
+        //router.push(`/(user)/orders/${order.id}`);
       },
     });
   };

@@ -1,7 +1,5 @@
 import { useMyOrderList } from '@/src/api/orders';
-import Button from '@/src/components/Button';
 import OrderListItem from '@/src/components/OrderListItem';
-import { supabase } from '@/src/lib/supabase';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -33,9 +31,6 @@ export default function OrdersScreen() {
         renderItem={({ item }) => <OrderListItem order={item} />}
         contentContainerStyle={{ padding: 10, gap: 10 }}
       />
-      <View style={{ padding: 10 }}>
-        <Button text="Sign out" onPress={() => supabase.auth.signOut()} />
-      </View>
     </View>
   );
 }

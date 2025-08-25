@@ -1,9 +1,8 @@
-import { Redirect, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
-import { useAuth } from '@/src/providers/AuthProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
 function TabBarIcon(props: {
@@ -13,13 +12,8 @@ function TabBarIcon(props: {
   return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
-export default function TabLayout() {
+export default function TabLayoutUser() {
   const colorScheme = useColorScheme();
-  const { session } = useAuth();
-
-  if (!session) {
-    return <Redirect href="/" />;
-  }
 
   return (
     <Tabs
@@ -27,12 +21,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          href: null,
-        }}
-      />
+      <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen
         name="menu"
         options={{
@@ -49,6 +38,13 @@ export default function TabLayout() {
           title: 'Orders',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
