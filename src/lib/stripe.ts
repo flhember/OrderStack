@@ -24,7 +24,7 @@ export const initialisePaymentSheet = async (amount: number) => {
 
   const returnURL = Linking.createURL('payment-return');
 
-  const { paymentIntent, publishableKey } =
+  const { paymentIntent, publishableKey, customer, ephemeralKey } =
     await fetchPaymentSheetParams(amount);
 
   if (!paymentIntent || !publishableKey) {
@@ -35,6 +35,8 @@ export const initialisePaymentSheet = async (amount: number) => {
   await initPaymentSheet({
     merchantDisplayName: 'OrderStack',
     paymentIntentClientSecret: paymentIntent,
+    customerId: customer,
+    customerEphemeralKeySecret: ephemeralKey,
     defaultBillingDetails: {
       name: 'Test User',
     },
