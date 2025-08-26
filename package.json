@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "orderstack",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -17,6 +17,7 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/material-top-tabs": "^7.3.4",
     "@react-navigation/native": "^7.1.6",
+    "@stripe/stripe-react-native": "0.45.0",
     "@supabase/supabase-js": "^2.53.0",
     "@tanstack/react-query": "^5.85.5",
     "aes-js": "^3.1.2",

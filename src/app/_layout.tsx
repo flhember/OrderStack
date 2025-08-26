@@ -13,6 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import AuthProvider, { useAuth } from '@/src/providers/AuthProvider';
 import CartProvider from '@/src/providers/CartProvider';
+import { StripeProvider } from '@stripe/stripe-react-native';
 import { useEffect, useRef } from 'react';
 import QueryProvider from '../providers/QueryProvider';
 
@@ -71,34 +72,41 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AuthProvider>
-          <QueryProvider>
-            <AuthGate>
-              <CartProvider>
-                <Stack initialRouteName="index">
-                  <Stack.Screen name="index" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="(user)"
-                    options={{ headerShown: false, animation: 'none' }}
-                  />
-                  <Stack.Screen
-                    name="(admin)"
-                    options={{ headerShown: false, animation: 'none' }}
-                  />
-                  <Stack.Screen
-                    name="cart"
-                    options={{ presentation: 'modal', title: 'Cart' }}
-                  />
-                  <Stack.Screen
-                    name="(auth)"
-                    options={{ headerShown: false }}
-                  />
-                </Stack>
-                <StatusBar style="auto" />
-              </CartProvider>
-            </AuthGate>
-          </QueryProvider>
-        </AuthProvider>
+        <StripeProvider
+          publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
+        >
+          <AuthProvider>
+            <QueryProvider>
+              <AuthGate>
+                <CartProvider>
+                  <Stack initialRouteName="index">
+                    <Stack.Screen
+                      name="index"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="(user)"
+                      options={{ headerShown: false, animation: 'none' }}
+                    />
+                    <Stack.Screen
+                      name="(admin)"
+                      options={{ headerShown: false, animation: 'none' }}
+                    />
+                    <Stack.Screen
+                      name="cart"
+                      options={{ presentation: 'modal', title: 'Cart' }}
+                    />
+                    <Stack.Screen
+                      name="(auth)"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                  <StatusBar style="auto" />
+                </CartProvider>
+              </AuthGate>
+            </QueryProvider>
+          </AuthProvider>
+        </StripeProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
