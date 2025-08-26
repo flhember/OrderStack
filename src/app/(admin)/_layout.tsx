@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Colors } from '@/src/constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
@@ -12,9 +12,6 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayoutAdmin() {
-  useEffect(() => {
-    console.log('Admin layout mounted');
-  }, []);
   return (
     <Tabs
       screenOptions={{
