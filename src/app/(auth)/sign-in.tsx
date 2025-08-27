@@ -1,9 +1,10 @@
+import { defaultImage } from '@/assets/data/products';
 import Button from '@/src/components/Button';
 import { Colors } from '@/src/constants/Colors';
 import { supabase } from '@/src/lib/supabase';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -25,65 +26,58 @@ const SignInScreen = () => {
     setLoading(false);
   }
 
-  /* const resetValues = () => {
-    setEmail('');
-    setPassword('');
-    setErrors('');
-  };
-
-  const validateInput = () => {
-    setErrors('');
-    if (!email) {
-      setErrors('Email is required');
-      return false;
-    }
-    if (!password) {
-      setErrors('Password is required');
-      return false;
-    }
-    return true;
-  };
-
-  const onSignIn = () => {
-    if (!validateInput()) {
-      return;
-    }
-
-    resetValues();
-
-    console.log('Signing in with:', { email, password });
-  };*/
-
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-        style={styles.input}
-      />
+      <View
+        style={{
+          flex: 1.2,
+          justifyContent: 'center',
+        }}
+      >
+        <Image
+          source={{ uri: defaultImage || '' }}
+          style={{
+            width: 200,
+            height: 200,
+            alignSelf: 'center',
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-start',
+        }}
+      >
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          style={styles.input}
+        />
 
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry
-        style={styles.input}
-      />
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          secureTextEntry
+          style={styles.input}
+        />
 
-      <Text style={{ color: 'red' }}>{errors}</Text>
+        <Text style={{ color: 'red' }}>{errors}</Text>
 
-      <Button
-        text={loading ? 'Signing in...' : 'Sign In'}
-        onPress={signInWithEmail}
-        disabled={loading}
-      />
+        <Button
+          text={loading ? 'Signing in...' : 'Sign In'}
+          onPress={signInWithEmail}
+          disabled={loading}
+        />
 
-      <Link href={'/sign-up'} style={styles.textButton}>
-        Create an account
-      </Link>
+        <Link href={'/sign-up'} style={styles.textButton}>
+          Create an account
+        </Link>
+      </View>
     </View>
   );
 };
