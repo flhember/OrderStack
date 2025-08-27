@@ -33,6 +33,7 @@ export default function OrdersScreen() {
 
   return (
     <View style={styles.container}>
+      <Text>Orders</Text>
       <FlatList
         data={orders}
         renderItem={({ item }) => <OrderListItem order={item} />}
