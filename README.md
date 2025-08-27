@@ -34,6 +34,16 @@ The app integrates authentication, a shopping cart system, real-time order manag
 
 ## 📸 Preview
 
+<p align="center">
+   <img src="./assets/readme/login.png" width="250" />
+   <img src="./assets/readme/products.png" width="250" />
+   <img src="./assets/readme/addProduct.png" width="250" />
+   <img src="./assets/readme/checkout.png" width="250" />
+   <img src="./assets/readme/userOrder.png" width="250" />
+   <img src="./assets/readme/adminOrder.png" width="250" />
+   <img src="./assets/readme/demo.gif" width="250" />
+</p>
+
 ---
 
 ## 🗄️ Database schema
